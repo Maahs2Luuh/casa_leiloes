@@ -168,6 +168,10 @@ public class cadastroVIEW extends javax.swing.JFrame {
         listagem.setVisible(true);
     }//GEN-LAST:event_btnProdutosActionPerformed
 
+    /*
+        "Botão de salvar cadastrando produto"
+     */
+
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         String nome = cadastroNome.getText();
         double valor = Double.parseDouble(cadastroValor.getText());
