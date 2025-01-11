@@ -1,48 +1,59 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author Adm
- */
 public class ProdutosDTO {
-    private Integer id;
-    private String nome;
-    private Integer valor;
-    private String status;
 
-    public Integer getId() {
+    private int id;
+    private String nome;
+    private String descricao;
+    private double preco;
+    private String status; // Adicionado para representar o status do produto
+
+    // Getters e Setters
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public Integer getValor() {
-        return valor;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setValor(Integer valor) {
-        this.valor = valor;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
+    // Métodos adicionais para compatibilidade (getValor e setValor)
+    public double getValor() {
+        return preco; // Retorna o preço
+    }
+
+    public void setValor(double valor) {
+        this.preco = valor; // Define o preço
+    }
 }

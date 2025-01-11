@@ -2,32 +2,20 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Adm
- */
 public class conectaDAO {
-    
-    public Connection connectDB(){
+
+    public Connection connectDB() throws SQLException {
         Connection conn = null;
-        
         try {
-        
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=");
-            
-        } catch (SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+            String url = "jdbc:mysql://localhost:3306/casa_leiloes"; // Substitua "seu_banco" pelo nome do banco
+            String user = "root"; // Usuário do banco
+            String password = "skyline_r34"; // Senha do banco
+
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao conectar com o banco de dados", e);
         }
         return conn;
     }
-    
 }
