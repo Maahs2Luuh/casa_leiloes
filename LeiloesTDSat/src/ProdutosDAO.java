@@ -37,42 +37,82 @@ public class ProdutosDAO {
         }
     }
 
+    // Método para salvar um produto no banco de dados
+    public boolean salvarProduto(ProdutosDTO produto) {
+        String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
+        boolean sucesso = false;
+
+        try (Connection conn = new conectaDAO().connectDB(); // Conexão
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, produto.getNome());
+            stmt.setDouble(2, produto.getPreco());
+            stmt.setString(3, produto.getStatus());
+
+            int linhasAfetadas = stmt.executeUpdate();
+            if (linhasAfetadas > 0) {
+                sucesso = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sucesso;
+    }
+
+    // Método para listar todos os produtos
     public ArrayList<ProdutosDTO> listarProdutos() throws SQLException {
         String sql = "SELECT * FROM produtos";
-        conn = new conectaDAO().connectDB(); // Conecta ao banco de dados
+        ArrayList<ProdutosDTO> listagem = new ArrayList<>();
 
-        try {
-            prep = conn.prepareStatement(sql);
-            resultset = prep.executeQuery(); // Executa o comando SQL
+        try (Connection conn = new conectaDAO().connectDB(); PreparedStatement prep = conn.prepareStatement(sql); ResultSet resultset = prep.executeQuery()) {
 
             while (resultset.next()) {
                 ProdutosDTO produto = new ProdutosDTO();
-                produto.setId(resultset.getInt("id"));              // Obtém o ID
-                produto.setNome(resultset.getString("nome"));       // Obtém o nome
-                produto.setDescricao(resultset.getString("descricao")); // Obtém a descrição
-                produto.setPreco(resultset.getDouble("preco"));     // Obtém o preço
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setDescricao(resultset.getString("descricao"));
+                produto.setPreco(resultset.getDouble("preco"));
 
-                listagem.add(produto); // Adiciona o produto à lista
+                listagem.add(produto);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
-        } finally {
-            try {
-                conn.close(); // Fecha a conexão com o banco
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + e.getMessage());
-            }
         }
 
         return listagem;
     }
 
-    public void venderProduto(int id) throws SQLException {
-        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
-        conn = new conectaDAO().connectDB();
+    // Método para listar todos os produtos vendidos
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+        String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+        ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
 
-        try {
-            prep = conn.prepareStatement(sql);
+        try (Connection conn = new conectaDAO().connectDB(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setPreco(rs.getDouble("valor"));
+                produto.setStatus(rs.getString("status"));
+                produtosVendidos.add(produto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return produtosVendidos;
+    }
+
+    /*
+    "Criada a função venderProduto() em ProdutosDAO"
+     */
+    // Método para vender um produto
+    public void venderProduto(int id) {
+        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+
+        try (Connection conn = new conectaDAO().connectDB(); PreparedStatement prep = conn.prepareStatement(sql)) {
+
             prep.setInt(1, id);
 
             int rowsUpdated = prep.executeUpdate();
@@ -81,43 +121,9 @@ public class ProdutosDAO {
             } else {
                 JOptionPane.showMessageDialog(null, "Produto não encontrado.");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
-        } finally {
-            try {
-                conn.close();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão: " + e.getMessage());
-            }
-        }
-    }
-
-    // Método para salvar um produto no banco de dados
-    public boolean salvarProduto(ProdutosDTO produto) {
-        String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
-        boolean sucesso = false;
-
-        try (Connection conn = new conectaDAO().connectDB(); // Supondo que você tenha a classe Conexao para conectar ao banco
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            // Preenche os parâmetros do SQL com os dados do produto
-            stmt.setString(1, produto.getNome());
-            stmt.setDouble(2, produto.getPreco());
-            stmt.setString(3, produto.getStatus());
-
-            // Executa a inserção no banco
-            int linhasAfetadas = stmt.executeUpdate();
-
-            // Se a inserção for bem-sucedida, retorna true
-            if (linhasAfetadas > 0) {
-                sucesso = true;
-            }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
         }
-
-        return sucesso;
     }
 
 }

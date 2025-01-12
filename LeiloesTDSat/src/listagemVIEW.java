@@ -8,7 +8,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     public listagemVIEW() {
         initComponents();
         listarProdutos();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -128,7 +128,9 @@ public class listagemVIEW extends javax.swing.JFrame {
         //produtosdao.venderProduto(Integer.parseInt(id));
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
-
+    /*
+    "Adicionado o botão de Vender na tela de listagem"
+     */
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
         String id = id_produto_venda.getText();
         JOptionPane.showMessageDialog(this, "Funcionalidade em desenvolvimento!");
@@ -141,6 +143,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao processar venda: " + e.getMessage());
         }
+        new vendasVIEW().setVisible(true);  // Abre a tela de Vendas
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
