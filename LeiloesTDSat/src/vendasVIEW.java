@@ -6,6 +6,7 @@ public class vendasVIEW extends javax.swing.JFrame {
 
     public vendasVIEW() {
         initComponents();
+        carregarProdutosVendidos();  // Carregar os produtos vendidos ao inicializar a tela
     }
 
     @SuppressWarnings("unchecked")
@@ -38,6 +39,11 @@ public class vendasVIEW extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jScrollPane1);
 
         btnVoltar.setText("< Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,6 +68,10 @@ public class vendasVIEW extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();  // Fecha a janela atual
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /*
     "Criada a tela de Vendas para listar produtos vendidos"
