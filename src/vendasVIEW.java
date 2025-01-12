@@ -1,10 +1,14 @@
 
+import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class vendasVIEW extends javax.swing.JFrame {
 
-    public vendasVIEW() {
+    public vendasVIEW() throws SQLException {
         initComponents();
         carregarProdutosVendidos();  // Carregar os produtos vendidos ao inicializar a tela
     }
@@ -78,33 +82,47 @@ public class vendasVIEW extends javax.swing.JFrame {
      */
     // Método para carregar os produtos vendidos na tabela
     private void carregarProdutosVendidos() {
-        ProdutosDAO produtosDAO = new ProdutosDAO();
-        ArrayList<ProdutosDTO> produtosVendidos = produtosDAO.listarProdutosVendidos();
-        // Obtendo o modelo da tabela
-        DefaultTableModel model = (DefaultTableModel) tableVendas.getModel();
-        // Limpar a tabela antes de adicionar novos produtos
-        model.setRowCount(0);
-        // Adicionando os dados dos produtos vendidos na tabela
-        for (ProdutosDTO produto : produtosVendidos) {
-            Object[] row = new Object[4];
-            row[0] = produto.getId();
-            row[1] = produto.getNome();
-            row[2] = produto.getPreco();
-            row[3] = produto.getStatus();
+        try {
+            ProdutosDAO produtosDAO = new ProdutosDAO();
+            ArrayList<ProdutosDTO> produtosVendidos = produtosDAO.listarProdutosVendidos();
+            // Obtendo o modelo da tabela
+            DefaultTableModel model = (DefaultTableModel) tableVendas.getModel();
+            // Limpar a tabela antes de adicionar novos produtos
+            model.setRowCount(0);
+            // Adicionando os dados dos produtos vendidos na tabela
+            for (ProdutosDTO produto : produtosVendidos) {
+                Object[] row = new Object[4];
+                row[0] = produto.getId();
+                row[1] = produto.getNome();
+                row[2] = produto.getValor(); // Corrigido para usar getValor()
+                row[3] = produto.getStatus();
 
-            model.addRow(row); // Adicionando a linha à tabela
+                model.addRow(row); // Adicionando a linha à tabela
+            }
+        } catch (SQLException e) {
+            // Exibir erro ao usuário
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar produtos vendidos: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Logar exceção no console
         }
     }
 
     public static void main(String args[]) {
-
-        // Exibindo a tela de vendas
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 new vendasVIEW().setVisible(true);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "Erro ao abrir a tela de vendas: " + ex.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(vendasVIEW.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVoltar;
