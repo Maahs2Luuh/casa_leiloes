@@ -74,8 +74,8 @@ public class vendasVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /*
-    "Criada a tela de Vendas para listar produtos vendidos"
-    */
+    "Criada a tela de vendas"
+     */
     // Método para carregar os produtos vendidos na tabela
     private void carregarProdutosVendidos() {
         ProdutosDAO produtosDAO = new ProdutosDAO();
@@ -91,14 +91,14 @@ public class vendasVIEW extends javax.swing.JFrame {
             row[1] = produto.getNome();
             row[2] = produto.getPreco();
             row[3] = produto.getStatus();
-            
+
             model.addRow(row); // Adicionando a linha à tabela
         }
     }
 
     public static void main(String args[]) {
 
-         // Exibindo a tela de vendas
+        // Exibindo a tela de vendas
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new vendasVIEW().setVisible(true);

@@ -76,7 +76,7 @@ public class ProdutosDAO {
     }
 
     /*
-    "Adicionado filtro para listar apenas itens vendidos"
+    "Implementada a função listarProdutosVendidos em ProdutosDAO"
      */
     // Método para listar produtos vendidos
     public ArrayList<ProdutosDTO> listarProdutosVendidos() {
@@ -100,7 +100,7 @@ public class ProdutosDAO {
     }
 
     /*
-    "Criada a função venderProduto() em ProdutosDAO"
+    "Implementada a função venderProduto em ProdutosDAO"
      */
     // Método para vender um produto
     public void venderProduto(int id) {
