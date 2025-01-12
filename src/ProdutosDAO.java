@@ -79,46 +79,46 @@ public class ProdutosDAO {
     "Implementada a função listarProdutosVendidos em ProdutosDAO"
      */
     // Método para listar produtos vendidos
-    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() throws SQLException {
         String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
         ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
 
-        try (Connection conn = new conectaDAO().connectDB(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = new conectaDAO().connectDB(); PreparedStatement prep = conn.prepareStatement(sql); ResultSet resultSet = prep.executeQuery()) {
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 ProdutosDTO produto = new ProdutosDTO();
-                produto.setId(rs.getInt("id"));
-                produto.setNome(rs.getString("nome"));
-                produto.setValor(rs.getDouble("valor"));  // Usando valor correto
-                produto.setStatus(rs.getString("status"));
+                produto.setId(resultSet.getInt("id"));
+                produto.setNome(resultSet.getString("nome"));
+                produto.setValor(resultSet.getDouble("valor")); // Usando valor correto
+                produto.setStatus(resultSet.getString("status"));
                 produtosVendidos.add(produto);
             }
         } catch (SQLException e) {
-            e.printStackTrace();  // Logando a exceção
+            String mensagemErro = "Erro ao listar produtos vendidos: " + e.getMessage();
+            e.printStackTrace(); // Logar no console
+            throw new SQLException(mensagemErro, e); // Re-lançar exceção com detalhes
         }
+
         return produtosVendidos;
     }
+
 
     /*
     "Implementada a função venderProduto em ProdutosDAO"
      */
     // Método para vender um produto
-    public void venderProduto(int id) {
+    public void venderProduto(int id) throws SQLException {
         String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
-
         try (Connection conn = new conectaDAO().connectDB(); PreparedStatement prep = conn.prepareStatement(sql)) {
-
             prep.setInt(1, id);
-
             int rowsUpdated = prep.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Produto não encontrado com ID: " + id);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Produto com ID " + id + " não encontrado.");
             }
+            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
-            e.printStackTrace();  // Logando a exceção
+            throw e; // Re-lançar a exceção, se necessário
         }
     }
 
