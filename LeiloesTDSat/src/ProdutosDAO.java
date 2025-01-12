@@ -75,6 +75,9 @@ public class ProdutosDAO {
         return listagem;
     }
 
+    /*
+    "Adicionado filtro para listar apenas itens vendidos"
+     */
     // Método para listar produtos vendidos
     public ArrayList<ProdutosDTO> listarProdutosVendidos() {
         String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
@@ -96,6 +99,9 @@ public class ProdutosDAO {
         return produtosVendidos;
     }
 
+    /*
+    "Criada a função venderProduto() em ProdutosDAO"
+     */
     // Método para vender um produto
     public void venderProduto(int id) {
         String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
