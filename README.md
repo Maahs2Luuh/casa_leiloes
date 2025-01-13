@@ -1,24 +1,23 @@
-# casa_leiloes
+# Casa de Leilões
 
 ## Status do Projeto
-Em desenvolvimento.
+🚧 Em desenvolvimento
 
-## Tecnologias
-- Java
-- Git
-- GitHub
+## Tecnologias Aplicadas
+- Java (JDK 17 ou superior)
+- Banco de Dados MySQL
+- Ferramenta de Versionamento: Git/GitHub
 
 ## Time de Desenvolvedores
-- Nome 1
-- Nome 2
-- Nome 3
+- Marcelo (Líder de Projeto)
+- João (Desenvolvedor Frontend)
+- Denis (Desenvolvedor Backend)
 
 ## Objetivo do Software
-O objetivo deste sistema é criar um ambiente de leilão online onde os usuários possam cadastrar produtos e realizar lances, garantindo a transparência e eficiência do processo.
+O objetivo do sistema é gerenciar uma casa de leilões, permitindo a administração de produtos e vendas, bem como o acompanhamento de lances realizados pelos usuários.
 
 ## Funcionalidades do Sistema
-1. Cadastro de usuários.
-2. Cadastro de produtos para leilão.
-3. Realização de lances em tempo real.
-4. Exibição de lances vencedores.
-5. Controle de vencimento de leilões e notificação de vencedores.
+1. Cadastro de produtos.
+2. Gerenciamento de usuários e seus lances.
+3. Relatórios sobre vendas finalizadas.
+4. Integração com banco de dados para persistência de dados.
